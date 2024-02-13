@@ -1,23 +1,25 @@
-package ReadFile;
+import lombok.Getter;
 
 import java.io.*;
 import java.util.*;
 
 import static java.util.Objects.isNull;
 
+@Getter
 public class YamlReader {
 
 	private File fileToRead;
 
-	private final ArrayList<String> newLines;
+	protected final ArrayList<String> newLines;
 
 
-	public YamlReader(File file) {
+	public YamlReader(File file) throws IOException {
 
 		if (!fileIsReadable(file))
 			throw new RuntimeException("A fájl kiterjesztése nem megfelelő, emiatt nem feldolgozható.\n (yaml vagy yml a helyes kiterjesztés)");
 
 		newLines = new ArrayList<>();
+		fillNewLines();
 	}
 
 
@@ -31,7 +33,7 @@ public class YamlReader {
 
 
 
-	private void getNewLines() throws IOException {
+	private void fillNewLines() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(fileToRead));
 
 		String line = reader.readLine();
