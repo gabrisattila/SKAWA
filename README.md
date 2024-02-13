@@ -4,7 +4,7 @@
 Készíts yaml fordítót, mely tetszőleges szabvány YAML fájlból kinyerni a value-kat, és megfordítva visszaírja (spell backwards). 
 A kulcsokat, kommenteket érintetlenül hagyja.
 
-1. példa fájl:
+Input:
 ```
 ---
  doe: "abcd"
@@ -27,7 +27,7 @@ A kulcsokat, kommenteket érintetlenül hagyja.
 - 
 ```
 
-2. példa fájl
+Output
 ```
 ---
  doe: "dcba"
