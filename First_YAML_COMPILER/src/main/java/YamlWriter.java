@@ -13,7 +13,7 @@ public class YamlWriter {
 
 	private final String originalFilePath;
 
-	private String newFilePath;
+	private final String newFilePath;
 
 	private File outPut;
 
@@ -37,6 +37,8 @@ public class YamlWriter {
 
 		for (String s : linesToWrite) {
 			writer.append(s);
+			writer.append("\n");
 		}
+		writer.close();
 	}
 }

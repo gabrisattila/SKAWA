@@ -8,7 +8,7 @@ import static java.util.Objects.isNull;
 @Getter
 public class YamlReader {
 
-	private File fileToRead;
+	private final File fileToRead;
 
 	protected final ArrayList<String> newLines;
 
@@ -17,7 +17,7 @@ public class YamlReader {
 
 		if (!fileIsReadable(file))
 			throw new RuntimeException("A fájl kiterjesztése nem megfelelő, emiatt nem feldolgozható.\n (yaml vagy yml a helyes kiterjesztés)");
-
+		fileToRead = file;
 		newLines = new ArrayList<>();
 		fillNewLines();
 	}
@@ -52,7 +52,7 @@ public class YamlReader {
 	private String changeValueIfItsReverse(String line, String originValue){
 		String reversedValue = reverseValueIfItsString(originValue);
 		line = line.substring(0, line.lastIndexOf(originValue) - 1);
-		return line + reversedValue;
+		return line + " " + reversedValue;
 	}
 
 	private String getValue(String line){
@@ -69,14 +69,22 @@ public class YamlReader {
 
 	private String reverseValueIfItsString(String value){
 		if (!itIsProperValue(value))
-			return null;
+			return value;
 		return new StringBuilder(value).reverse().toString();
 	}
 
 	private boolean itIsProperValue(String value){
-		return
-				!"false".equals(value) && !"true".equals(value) &&
-				!value.matches("-?\\d+(\\.\\d+)?");
+		try {
+			Integer.parseInt(value);
+			return false;
+		}catch (NumberFormatException e){
+			try {
+				Double.parseDouble(value);
+				return false;
+			}catch (NumberFormatException ex){
+				return !"false".equals(value) && !"true".equals(value);
+			}
+		}
 	}
 
 
